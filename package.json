@@ -1,6 +1,6 @@
 {
   "name": "@lambda-script/vite-plugin-worktree-hmr",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Vite plugin fixing HMR when the project root lives under a hardcoded-ignored path like .git/worktree/feature-*",
   "keywords": [
     "vite",
