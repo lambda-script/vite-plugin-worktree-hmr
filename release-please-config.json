@@ -1,14 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "release-type": "node",
+  "package-name": "@lambda-script/vite-plugin-worktree-hmr",
+  "changelog-path": "CHANGELOG.md",
+  "include-v-in-tag": true,
+  "include-component-in-tag": false,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
   "packages": {
-    ".": {
-      "package-name": "@lambda-script/vite-plugin-worktree-hmr",
-      "changelog-path": "CHANGELOG.md",
-      "include-v-in-tag": true,
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": false
-    }
+    ".": {}
   },
   "changelog-sections": [
     { "type": "feat", "section": "Features" },
