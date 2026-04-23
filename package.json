@@ -1,0 +1,74 @@
+{
+  "name": "@lambda-script/vite-plugin-worktree-hmr",
+  "version": "0.0.0",
+  "description": "Vite plugin fixing HMR when the project root lives under a hardcoded-ignored path like .git/worktree/feature-*",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "hmr",
+    "git-worktree",
+    "worktree",
+    "chokidar",
+    "dev-server"
+  ],
+  "homepage": "https://github.com/lambda-script/vite-plugin-worktree-hmr",
+  "bugs": {
+    "url": "https://github.com/lambda-script/vite-plugin-worktree-hmr/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lambda-script/vite-plugin-worktree-hmr.git"
+  },
+  "license": "MIT",
+  "author": "LambdaScript <backoffice@lambdascript.dev>",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.ja.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0 || ^4.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.10",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

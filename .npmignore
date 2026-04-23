@@ -1,0 +1,16 @@
+.github/
+tests/
+src/
+coverage/
+node_modules/
+*.log
+.DS_Store
+biome.json
+tsconfig.json
+tsup.config.ts
+vitest.config.ts
+release-please-config.json
+.release-please-manifest.json
+pnpm-lock.yaml
+CLAUDE.md
+CHANGELOG.md
