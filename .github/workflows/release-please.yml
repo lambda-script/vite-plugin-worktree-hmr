@@ -4,16 +4,8 @@ on:
   push:
     branches: [main]
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: googleapis/release-please-action@v4
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
+  release:
+    uses: lambda-script/shared-workflows/.github/workflows/release-please.yml@0105af4e12ad593ecaf9d4bef668315f887581cf # v1
+    secrets:
+      token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

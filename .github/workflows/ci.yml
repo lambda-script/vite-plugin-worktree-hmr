@@ -4,45 +4,11 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
-  check:
-    name: Check (lint / typecheck / test / build)
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [20, 22]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Biome check
-        run: pnpm check
-
-      - name: Type check
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test
-
-      - name: Build
-        run: pnpm build
+  ci:
+    uses: lambda-script/shared-workflows/.github/workflows/ci.yml@0105af4e12ad593ecaf9d4bef668315f887581cf # v1
+    with:
+      package_manager: pnpm
+      node_versions: '["20", "22"]'
+      test_script: test

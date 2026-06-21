@@ -4,42 +4,12 @@ on:
   release:
     types: [published]
 
-concurrency:
-  group: publish-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   publish:
-    runs-on: ubuntu-latest
-    environment:
-      name: npm-publish
-      url: https://www.npmjs.com/package/@lambda-script/vite-plugin-worktree-hmr
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-          registry-url: https://registry.npmjs.org
-          scope: "@lambda-script"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build
-
-      - name: Publish to npm
-        run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    uses: lambda-script/shared-workflows/.github/workflows/npm-publish.yml@0105af4e12ad593ecaf9d4bef668315f887581cf # v1
+    with:
+      package_manager: pnpm
+      node_version: "22"
+      scope: "@lambda-script"
+    secrets:
+      npm_token: ${{ secrets.NPM_TOKEN }}
