@@ -5,15 +5,33 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    # The release App's key lives in this Environment, whose deployment branch is
+    # main only, so pull request workflows cannot read it.
+    environment: release
     steps:
+      # The organization's CI uses no personal access token (lambda-script/
+      # shared-workflows README「CI の秘密の方針」). A token from the release App
+      # lets the release PR and tag start later workflows (publish.yml), which a
+      # GITHUB_TOKEN would not. Made in this job and revoked when it ends.
+      - name: Create release App token
+        id: release-app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: Iv0 # replace with the release App's Client ID before merging
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+          permission-metadata: read
       - uses: googleapis/release-please-action@v4
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ steps.release-app.outputs.token }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json

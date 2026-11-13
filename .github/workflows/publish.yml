@@ -28,10 +28,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Trusted publishing needs Node 22.14.0+ and npm CLI 11.5.1+ (docs.npmjs.com/trusted-publishers, 2026-11-13).
+          node-version: 22.21.1
           cache: pnpm
           registry-url: https://registry.npmjs.org
           scope: "@lambda-script"
+
+      - name: Use an npm CLI that supports trusted publishing
+        run: npm install -g npm@11.21.2
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -39,7 +43,8 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Trusted publishing: npm exchanges this job's OIDC token (id-token: write)
+      # for a short-lived publish credential, so no npm token is stored. npmjs.com
+      # trusts only this repository, publish.yml and the npm-publish Environment.
       - name: Publish to npm
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
