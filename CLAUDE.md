@@ -30,7 +30,7 @@ All four must pass before committing.
 1. Commits land on `main` following Conventional Commits.
 2. `release-please` opens/updates a release PR.
 3. Maintainer merges the release PR → tag + GitHub Release created.
-4. The `publish.yml` workflow runs on release creation and runs `npm publish` using `NPM_TOKEN`.
+4. The `publish` job of the same `release-please.yml` run publishes to npm through trusted publishing (OIDC, the `npm-publish` Environment). No npm token or personal access token is stored. release-please runs on `GITHUB_TOKEN`, whose events start no other workflow, so the publish cannot live in a separate workflow triggered by the release.
 
 ## Do not
 
